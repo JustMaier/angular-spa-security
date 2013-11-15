@@ -133,7 +133,7 @@
 				Security.user = null;
 				accessToken('clear');
 				redirectTarget = null;
-				if (securityProvider.events.login) securityProvider.events.logout(Security); // Your Logout events
+				if (securityProvider.events.logout) securityProvider.events.logout(Security); // Your Logout events
 				$location.path(securityProvider.urls.postLogout);
 				deferred.resolve();
 			}).error(function (errorData) {
@@ -147,7 +147,7 @@
 			var deferred = $q.defer();
 
 			Api.register(data).success(function () {
-				if (securityProvider.events.register) securityProvider.events.register(Security); // Your Register events
+				if (securityProvider.events.register) securityProvider.events.register(Security, data); // Your Register events
 				if (securityProvider.registerThenLogin) {
 					Security.login(data).then(function (user) {
 						deferred.resolve(user);
