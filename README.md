@@ -42,28 +42,39 @@ angular.module('app',['SignalR'])
 }])
 ```
 
+####HTML <sub><sup>List External Login Buttons</sup></sub>
+```html
+<h4>Or Login With</h4>
+<button class="btn btn-default" ng-repeat="login in security.externalLogins" ng-bind="login.name" ng-click="security.loginWithExternal(login)"></button>
+```
+
 ##Provider Options
 
 * `registerThenLogin` when registering automatically log in right after *true*
 * `urls.login` url of login page */login*
 * `urls.postLogout` url of where to send the user after logout */login*
+* `urls.registerExternal` url of where to send the user after returning from OAuth on first login with that account */registerExternal*
 * `urls.home` url of where to send the user after login */*
 * `apiUrls.join` where to send registration request */api/account/register*
 * `apiUrls.login` where to send login request */token*
 * `apiUrls.logout` where to send the logout request */api/account/logout*
 * `apiUrls.userInfo` where to send the userInfo request */api/account/userInfo*
 * `apiUrls.changePassword` where to send the changePassword request */api/account/changePassword*
-* `events` hooks for functions that will be called during these corresponding events: login, logout, register, reloadUser
+* `events` hooks for functions that will be called during these corresponding events: login, logout, register, reloadUser, closeOAuthWindow
 
 ##Security Variables
 
 * `user` holds the response from login request - using the login event hook you can override this
+* `externalUser` holds the response from external login request when the user doesn't already have an account
+* `externalLogins` array of the available 3rd party login providers - providers are objects like `{name: 'Twitter', url:'/api/account/...'}`
 
 ##Security Methods
 
 * `login(data)` login with the data from the data object (username, password)
+* `loginWithExternal(login)` attempt to login using the specified login provider from the externalLogins array - redirect to external register if the don't already have an account <sub><sup>see example above</sup></sub>
 * `logout()` logout the current user
 * `register(data)` register with the data from the data object (username, password, confirmPassword)
+* `registerExternal()` send the updated externalUser data for updating and get the new 3rd party token and login
 * `changePassword(data)` change the password with the data object (oldPassword, newPassword, confirmPassword)
 
 ##Demo
