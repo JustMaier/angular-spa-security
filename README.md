@@ -21,6 +21,7 @@ angular.module('app',['SignalR'])
 	securityProvider.events.login = function(security, user){
 		alert('Hello '+user.userName);
 	}
+	securityProvider.usePopups = false;
 }])
 .run(['$rootScope','security', function($rootScope, security){
 	$rootScope.security = security; //So you can access security variables and methods anywhere
@@ -55,6 +56,7 @@ angular.module('app',['SignalR'])
 * `urls.postLogout` url of where to send the user after logout */login*
 * `urls.registerExternal` url of where to send the user after returning from OAuth on first login with that account */registerExternal*
 * `urls.home` url of where to send the user after login */*
+* `usePopups` whether or not to open the authentication pages in a popup **Only Works in Chrome* <sup><sub>Can only set a value on the popup opener after a redirect in Chrome</sub></sup>
 * `apiUrls.join` where to send registration request */api/account/register*
 * `apiUrls.login` where to send login request */token*
 * `apiUrls.logout` where to send the logout request */api/account/logout*
