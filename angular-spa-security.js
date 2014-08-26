@@ -7,6 +7,7 @@
 	logout: '/api/account/logout',
 	forgotPassword: '/api/account/forgotpassword',
 	resetPassword: '/api/account/resetpassword',
+	setPassword: '/api/account/setPassword',
 	confirmEmail: '/api/account/confirmEmail',
 	userInfo: '/api/account/userInfo',
 	changePassword: '/api/account/changePassword',
@@ -14,7 +15,7 @@
 	manageInfo: '/api/account/manageInfo',
 	registerExternal: '/api/account/registerExternal',
 	addExternalLogin: '/api/account/addExternalLogin',
-	removeLogin: '/api/account/removeLogin'
+	removeLogin: '/api/account/removeLogin',
 })
 .factory('security.api', ['$http', 'security.urls', function ($http, Urls) {
 	//Parameterize - Necessary for funky login expectations...
@@ -69,6 +70,9 @@
 		},
 		resetPassword: function (data) {
 			return $http({ method: 'POST', url: Urls.resetPassword, data: data });
+		},
+		setPassword: function (data) {
+			return $http({ method: 'POST', url: Urls.setPassword, data: data });
 		},
 		confirmEmail: function (data) {
 			return $http({ method: 'GET', url: Urls.confirmEmail+'?code='+encodeURIComponent(data.code)+'&userId='+encodeURIComponent(data.userId) });
@@ -398,6 +402,18 @@
 
 			return deferred.promise;
 		};
+
+		Security.setPassword = function (data) {
+            var deferred = $q.defer();
+
+            Api.setPassword(data).success(function () {
+                deferred.resolve();
+            }).error(function (errorData) {
+                deferred.reject(errorData);
+            });
+
+            return deferred.promise;
+        };
 
 		Security.confirmEmail = function (data) {
 			var deferred = $q.defer();
