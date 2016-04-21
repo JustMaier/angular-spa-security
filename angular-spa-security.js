@@ -259,11 +259,11 @@ angular.module('security', [])
             //Check for access token and get user info
             if (accessToken()) {
                 accessToken(accessToken());
-                Api.getUserInfo(accessToken()).then(function (user) {
-                    Security.user = user;
+                Api.getUserInfo(accessToken()).then(function (response) {
+                    Security.user = response.data;
 
                     if (securityProvider.events.reloadUser)
-                        securityProvider.events.reloadUser(Security, user); // Your Register events
+                        securityProvider.events.reloadUser(Security, response.data); // Your Register events
                 }, function (result) {
                     accessToken("clear");
                     Security.authenticate();
