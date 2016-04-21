@@ -1,4 +1,13 @@
-﻿angular.module('security', [])
+﻿/*--------------------------------------------------------------------------
+* angular-spa-security 
+* ver 1.2.1 Aug 26, 2014
+*
+* created and maintained by Justin Maier
+* licensed under The MIT License https://github.com/JustMaier/angular-spa-security/blob/master/LICENSE
+* https://github.com/JustMaier/angular-spa-security
+*--------------------------------------------------------------------------*/
+
+angular.module('security', [])
 .constant('security.urls', {
 	site: '/',
 	manage: '/manage',
