@@ -170,8 +170,10 @@ angular.module('security', [])
 					sessionStorage.removeItem('accessToken');
 					delete $http.defaults.headers.common.Authorization;
 				} else {
-					if (persist) localStorage.accessToken = accessToken;
-					else sessionStorage.accessToken = accessToken;
+					if (persist)
+						localStorage.accessToken = accessToken;
+					else
+						sessionStorage.accessToken = accessToken;
 					$http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
 				}
 			}
@@ -215,13 +217,15 @@ angular.module('security', [])
 			                accessToken(external_data.access_token, rememberMe);
 			                Security.user = user;
 			                Security.redirectAuthenticated(redirectTarget() || securityProvider.urls.home);
-			                if (securityProvider.events.login) securityProvider.events.login(Security, user); // Your Login events
+			                if (securityProvider.events.login)
+			                	securityProvider.events.login(Security, user); // Your Login events
 			                deferred.resolve(Security.user);
 			            } else {
 			                Security.externalUser = user;
 			                Security.externalUser.access_token = external_data.access_token;
 			                Security.externalUser.provider = provider;
-			                if (rememberMe != null) localStorage.rememberMe = rememberMe;
+			                if (rememberMe != null)
+								localStorage.rememberMe = rememberMe;
 			                $location.path(securityProvider.urls.registerExternal);
 			                deferred.reject();
 			            }
@@ -260,7 +264,8 @@ angular.module('security', [])
 				Api.getUserInfo(accessToken()).success(function (user) {
 				    Security.user = user;
 
-					if (securityProvider.events.reloadUser) securityProvider.events.reloadUser(Security, user); // Your Register events
+					if (securityProvider.events.reloadUser)
+						securityProvider.events.reloadUser(Security, user); // Your Register events
 				});
 			}
 
@@ -523,7 +528,8 @@ angular.module('security', [])
 
 		Security.authenticate = function () {
 		    if (accessToken()) return;
-            if(!redirectTarget())redirectTarget($location.path());
+			if (!redirectTarget())
+				redirectTarget($location.path());
 			$location.path(securityProvider.urls.login);
 		};
 
