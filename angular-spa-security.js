@@ -261,12 +261,15 @@ angular.module('security', [])
 			//Check for access token and get user info
 			if (accessToken()) {
 				accessToken(accessToken());
-				Api.getUserInfo(accessToken()).success(function (user) {
+				Api.getUserInfo(accessToken()).then(function (user) {
 				    Security.user = user;
 
 					if (securityProvider.events.reloadUser)
 						securityProvider.events.reloadUser(Security, user); // Your Register events
-				});
+				}, function (result) {
+				    accessToken("clear");
+				    Security.authenticate();
+                });
 			}
 
 			//Fetch list of external logins
