@@ -244,8 +244,8 @@ angular.module('security', [])
 					window.opener.external_data = external_data;
 					window.close();
 				} else {
-				    var url = redirectTarget();
-				    $location.path(url || securityProvider.urls.home);
+					var url = redirectTarget();
+					$location.path(url || securityProvider.urls.home);
 
 					var login = JSON.parse(localStorage.loginProvider);
 					var rememberMe = false;
@@ -262,14 +262,14 @@ angular.module('security', [])
 			if (accessToken()) {
 				accessToken(accessToken());
 				Api.getUserInfo(accessToken()).then(function (user) {
-				    Security.user = user;
+					Security.user = user;
 
 					if (securityProvider.events.reloadUser)
 						securityProvider.events.reloadUser(Security, user); // Your Register events
 				}, function (result) {
-				    accessToken("clear");
-				    Security.authenticate();
-                });
+					accessToken("clear");
+					Security.authenticate();
+				});
 			}
 
 			//Fetch list of external logins
@@ -343,15 +343,14 @@ angular.module('security', [])
 		Security.logout = function () {
 			var deferred = $q.defer();
 
-			Api.logout().success(function () {
+			Api.logout().finally(function () {
 				Security.user = null;
 				accessToken('clear');
 				redirectTarget('clear');
-				if (securityProvider.events.logout) securityProvider.events.logout(Security); // Your Logout events
+				if (securityProvider.events.logout)
+					securityProvider.events.logout(Security); // Your Logout events
 				$location.path(securityProvider.urls.postLogout);
 				deferred.resolve();
-			}).error(function (errorData) {
-				deferred.reject(errorData);
 			});
 
 			return deferred.promise;
